@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   BookOpen,
+  CircleStop,
   ExternalLink,
   Play,
   ShieldCheck,
@@ -35,9 +36,36 @@ const InvestmentVideo: React.FC = () => {
   const isDark = theme === 'dark';
   const [loaded, setLoaded] = useState(false);
   const [activeTopic, setActiveTopic] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!loaded || !sectionRef.current) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) setLoaded(false);
+      },
+      { threshold: 0.08 },
+    );
+
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [loaded]);
+
+  useEffect(() => {
+    if (!loaded) return undefined;
+
+    const stopWhenHidden = () => {
+      if (document.hidden) setLoaded(false);
+    };
+
+    document.addEventListener('visibilitychange', stopWhenHidden);
+    return () => document.removeEventListener('visibilitychange', stopWhenHidden);
+  }, [loaded]);
 
   return (
     <section
+      ref={sectionRef}
       aria-labelledby="investment-video-title"
       className={`overflow-hidden rounded-[1.75rem] border shadow-soft-lg ${
         isDark ? 'border-white/10 bg-slate-900/80' : 'border-white/70 bg-white/90'
@@ -109,14 +137,25 @@ const InvestmentVideo: React.FC = () => {
             : 'min-h-[27rem] sm:min-h-[29rem] lg:aspect-video lg:min-h-0'
         }`}>
           {loaded ? (
-            <iframe
-              className="absolute inset-0 h-full w-full"
-              src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0`}
-              title="Investing 101: stocks, bonds, cash, portfolios and asset allocation"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
+            <>
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0`}
+                title="Investing 101: stocks, bonds, cash, portfolios and asset allocation"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+              <button
+                type="button"
+                onClick={() => setLoaded(false)}
+                className="absolute right-2 top-2 z-20 inline-flex min-h-10 items-center gap-2 rounded-full border border-white/20 bg-slate-950/90 px-3 py-2 text-xs font-bold text-white shadow-xl backdrop-blur transition hover:bg-rose-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-3 sm:top-3 sm:text-sm"
+                aria-label="Stop video"
+              >
+                <CircleStop size={16} />
+                Stop video
+              </button>
+            </>
           ) : (
             <button
               type="button"
