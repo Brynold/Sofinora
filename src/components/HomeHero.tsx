@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '../router';
 import { ArrowRight, FileSpreadsheet, Sparkles, Target, TrendingUp } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import LiveActivityBadge from './LiveActivityBadge';
 
 const HomeHero: React.FC = () => {
   const { theme } = useTheme();
@@ -45,6 +46,8 @@ const HomeHero: React.FC = () => {
             Use accurate calculators for savings, investing, tax planning, and retirement so you can
             compare choices, spot tradeoffs, and plan with more confidence.
           </p>
+
+          <LiveActivityBadge />
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a
