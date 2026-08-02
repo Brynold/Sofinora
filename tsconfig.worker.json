@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2022"],
+    "moduleResolution": "bundler",
+    "types": [],
+    "allowJs": false
+  },
+  "include": ["worker", "worker-configuration.d.ts"]
+}

@@ -38,6 +38,11 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), launchSeoPlugin(siteUrl)],
+    server: {
+      proxy: {
+        '/api/presence': 'http://127.0.0.1:8788',
+      },
+    },
     build: {
       sourcemap: true,
     },
