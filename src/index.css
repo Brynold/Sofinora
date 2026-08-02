@@ -1,13 +1,769 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+/* Smooth scrolling for the entire application */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core palette */
+  --color-primary-50: 240 249 255;
+  --color-primary-100: 224 242 254;
+  --color-primary-200: 186 230 253;
+  --color-primary-300: 125 211 252;
+  --color-primary-400: 56 189 248;
+  --color-primary-500: 14 165 233;
+  --color-primary-600: 2 132 199;
+  --color-primary-700: 3 105 161;
+  --color-primary-800: 7 89 133;
+  --color-primary-900: 12 74 110;
+  --color-primary-950: 8 47 73;
+  
+  /* Secondary palette */
+  --color-secondary-50: 238 242 255;
+  --color-secondary-100: 224 231 255;
+  --color-secondary-200: 199 210 254;
+  --color-secondary-300: 165 180 252;
+  --color-secondary-400: 129 140 248;
+  --color-secondary-500: 99 102 241;
+  --color-secondary-600: 79 70 229;
+  --color-secondary-700: 67 56 202;
+  --color-secondary-800: 55 48 163;
+  --color-secondary-900: 49 46 129;
+  --color-secondary-950: 30 27 75;
+  
+  /* Success palette */
+  --color-success-50: 240 253 244;
+  --color-success-100: 220 252 231;
+  --color-success-200: 187 247 208;
+  --color-success-300: 134 239 172;
+  --color-success-400: 74 222 128;
+  --color-success-500: 34 197 94;
+  --color-success-600: 22 163 74;
+  --color-success-700: 21 128 61;
+  --color-success-800: 22 101 52;
+  --color-success-900: 20 83 45;
+  --color-success-950: 5 46 22;
+  
+  /* Banking & finance specialized palette */
+  --color-banking-50: 246 252 233;
+  --color-banking-100: 236 252 203;
+  --color-banking-200: 217 249 157;
+  --color-banking-300: 190 242 100;
+  --color-banking-400: 163 230 53;
+  --color-banking-500: 132 204 22;
+  --color-banking-600: 101 163 13;
+  --color-banking-700: 77 124 15;
+  --color-banking-800: 63 98 18;
+  --color-banking-900: 54 83 20;
+  --color-banking-950: 26 46 5;
+  
+  /* Accent palette */
+  --color-accent-50: 253 242 255;
+  --color-accent-100: 250 232 254;
+  --color-accent-200: 245 208 254;
+  --color-accent-300: 240 171 252;
+  --color-accent-400: 232 121 249;
+  --color-accent-500: 217 70 239;
+  --color-accent-600: 192 38 211;
+  --color-accent-700: 162 28 175;
+  --color-accent-800: 134 25 143;
+  --color-accent-900: 112 26 117;
+  --color-accent-950: 74 4 78;
+  
+  /* Light theme specific */
+  --bg-main: 248 250 252;
+  --bg-elevated: 255 255 255;
+  --bg-inset: 241 245 249;
+  --text-primary: 15 23 42;
+  --text-secondary: 71 85 105;
+  --text-tertiary: 148 163 184;
+  --border-light: 226 232 240;
+  --border-medium: 203 213 225;
+  
+  /* Font settings */
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.dark {
+  /* Dark theme specific */
+  --bg-main: 15 23 42;
+  --bg-elevated: 30 41 59;
+  --bg-inset: 51 65 85;
+  --text-primary: 248 250 252;
+  --text-secondary: 226 232 240;
+  --text-tertiary: 148 163 184;
+  --border-light: 51 65 85;
+  --border-medium: 71 85 105;
+}
+
+body {
+  @apply bg-main text-primary font-sans antialiased;
+  min-width: 320px;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 25% 10%, rgb(var(--color-primary-900) / 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 75% 75%, rgb(var(--color-secondary-900) / 0.03) 0%, transparent 30%),
+    radial-gradient(circle at 60% 30%, rgb(var(--color-banking-900) / 0.04) 0%, transparent 25%);
+  background-attachment: fixed;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+select.app-select {
+  color-scheme: light;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+select.app-select:focus-visible {
+  outline: none;
+}
+
+select.app-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+select.app-select option {
+  background: rgb(255 255 255);
+  color: rgb(15 23 42);
+}
+
+.dark select.app-select {
+  color-scheme: dark;
+}
+
+.dark select.app-select option {
+  background: rgb(15 23 42);
+  color: rgb(248 250 252);
+}
+
+@media (max-width: 639px) {
+  .recharts-responsive-container,
+  .recharts-wrapper,
+  .recharts-surface {
+    max-width: 100% !important;
+  }
+}
+
+.dark body {
+  background-image: 
+    radial-gradient(circle at 25% 10%, rgb(var(--color-primary-500) / 0.15) 0%, transparent 20%),
+    radial-gradient(circle at 75% 75%, rgb(var(--color-secondary-500) / 0.12) 0%, transparent 30%),
+    radial-gradient(circle at 60% 30%, rgb(var(--color-banking-500) / 0.08) 0%, transparent 25%);
+}
+
+@layer components {
+  /* Common containers */
+  .card {
+    @apply rounded-xl border border-light bg-elevated shadow-soft p-5;
+  }
+  
+  .dark .card {
+    @apply border-dark-border;
+  }
+  
+  /* Inputs and form elements */
+  .input-group {
+    @apply mb-4;
+  }
+  
+  .input-label {
+    @apply block text-sm font-medium text-secondary mb-1;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 rounded-lg border border-light bg-inset text-primary focus:ring-2 focus:ring-primary-300 focus:border-primary-300 transition-colors;
+  }
+  
+  .dark .input-field {
+    @apply border-dark-border bg-dark-inset focus:ring-primary-600 focus:border-primary-600;
+  }
+  
+  /* Buttons */
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all active:scale-95;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-soft hover:shadow-soft-md;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-secondary-600 to-secondary-500 text-white shadow-soft hover:shadow-soft-md;
+  }
+  
+  .btn-banking {
+    @apply bg-gradient-to-r from-banking-600 to-banking-500 text-white shadow-soft hover:shadow-soft-md;
+  }
+  
+  .btn-outline {
+    @apply border border-light bg-elevated text-primary hover:bg-inset;
+  }
+  
+  .dark .btn-outline {
+    @apply border-dark-border bg-dark-elevated text-white hover:bg-dark-inset;
+  }
+  
+  /* Finance-specific elements */
+  .stat-card {
+    @apply p-5 rounded-xl border border-light bg-elevated;
+  }
+  
+  .dark .stat-card {
+    @apply border-dark-border bg-dark-elevated;
+  }
+
+  .stat-value {
+    @apply text-2xl font-semibold;
+  }
+  
+  .stat-label {
+    @apply text-sm text-secondary;
+  }
+  
+  .financial-motivation {
+    @apply text-base md:text-lg leading-relaxed my-4;
+  }
+  
+  /* Chart styles */
+  .chart-container {
+    @apply p-4 rounded-xl border border-light bg-elevated h-[300px] md:h-[400px];
+  }
+  
+  .dark .chart-container {
+    @apply border-dark-border bg-dark-elevated;
+  }
+  
+  /* Premium effects */
+  .premium-glass {
+    @apply backdrop-blur-md bg-white/60 dark:bg-dark-elevated/60 border border-white/20 dark:border-white/5;
+  }
+  
+  .premium-card {
+    @apply rounded-xl border border-light bg-gradient-to-br from-white via-white to-gray-50 dark:from-dark-elevated dark:via-dark-elevated dark:to-dark-inset shadow-soft-lg;
+  }
+  
+  /* Results section styling */
+  .results-header {
+    @apply text-lg font-medium mb-4 text-primary;
+  }
+  
+  .results-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6;
+  }
+  
+  .info-section {
+    @apply mt-8 p-5 rounded-xl border border-light bg-inset;
+  }
+  
+  .dark .info-section {
+    @apply border-dark-border bg-dark-inset;
+  }
+  
+  /* Calculator-specific styles */
+  .calculator-form {
+    @apply mb-6;
+  }
+  
+  .calculator-header {
+    @apply text-2xl font-display font-bold mb-6;
+  }
+  
+  .calculator-subheader {
+    @apply text-lg font-medium mb-3;
+  }
+  
+  /* Shadows */
+  .shadow-soft {
+    @apply shadow-[0_2px_6px_rgba(0,0,0,0.05)];
+  }
+  
+  .shadow-soft-md {
+    @apply shadow-[0_4px_12px_rgba(0,0,0,0.08)];
+  }
+  
+  .shadow-soft-lg {
+    @apply shadow-[0_8px_20px_rgba(0,0,0,0.12)];
+  }
+  
+  .dark .shadow-soft,
+  .dark .shadow-soft-md,
+  .dark .shadow-soft-lg {
+    @apply shadow-[0_8px_16px_rgba(0,0,0,0.6)];
+  }
+  
+  /* Animations */
+  .fade-in {
+    @apply animate-fadeIn;
+  }
+  
+  .slide-up {
+    @apply animate-slideUp;
+  }
+  
+  .bounce-in {
+    @apply animate-bounceIn;
+  }
+  
+  /* Add any custom component classes here */
+  .bg-dark-gradient {
+    background: linear-gradient(145deg, #182234 0%, #0f172a 100%);
+  }
+  
+  .bg-light-gradient {
+    background: linear-gradient(145deg, #f8fafc 0%, #e0f2fe 100%);
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
+  .animate-slideUp {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+  
+  .animate-bounceIn {
+    animation: bounceIn 0.6s ease-out forwards;
+  }
+  
+  .bg-main {
+    background-color: rgb(var(--bg-main));
+  }
+  
+  .bg-elevated {
+    background-color: rgb(var(--bg-elevated));
+  }
+  
+  .bg-inset {
+    background-color: rgb(var(--bg-inset));
+  }
+  
+  .text-primary {
+    color: rgb(var(--text-primary));
+  }
+  
+  .text-secondary {
+    color: rgb(var(--text-secondary));
+  }
+  
+  .text-tertiary {
+    color: rgb(var(--text-tertiary));
+  }
+  
+  .border-light {
+    border-color: rgb(var(--border-light));
+  }
+  
+  .border-medium {
+    border-color: rgb(var(--border-medium));
+  }
+  
+  .dark-border {
+    border-color: rgb(var(--border-light));
+  }
+  
+  .bg-dark-elevated {
+    background-color: rgb(var(--bg-elevated));
+  }
+  
+  .bg-dark-inset {
+    background-color: rgb(var(--bg-inset));
+  }
+  
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgb(var(--bg-inset));
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-primary-300) / 0.5);
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-primary-400) / 0.7);
+  }
+  
+  .dark .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgb(var(--bg-inset));
+  }
+  
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-primary-700) / 0.5);
+  }
+  
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-primary-600) / 0.7);
+  }
+  
+  /* Media queries for responsive adjustments */
+  @media (max-width: 640px) {
+    .card {
+      @apply p-4;
+    }
+    
+    .stat-card {
+      @apply p-3;
+    }
+    
+    .calculator-header {
+      @apply text-xl;
+    }
+    
+    .info-section {
+      @apply p-4;
+    }
+  }
+}
+
+/* Add this to your existing CSS file */
+.bg-pattern-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .bg-pattern-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+/* Floating background animation elements */
+.floating-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.floating-shape {
+  position: absolute;
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dark .floating-shape {
+  opacity: 0.05;
+}
+
+.shape-circle {
+  border-radius: 50%;
+}
+
+.shape-square {
+  border-radius: 4px;
+}
+
+.shape-triangle {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.floating-1 {
+  width: 80px;
+  height: 80px;
+  background-color: rgb(var(--color-primary-300));
+  animation: float1 20s linear infinite;
+  left: 10%;
+  top: 20%;
+}
+
+.floating-2 {
+  width: 120px;
+  height: 120px;
+  background-color: rgb(var(--color-secondary-300));
+  animation: float2 25s linear infinite;
+  right: 15%;
+  bottom: 30%;
+}
+
+.floating-3 {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(var(--color-accent-300));
+  animation: float3 22s linear infinite;
+  left: 30%;
+  bottom: 10%;
+}
+
+.floating-4 {
+  width: 100px;
+  height: 100px;
+  background-color: rgb(var(--color-primary-100));
+  animation: float4 28s linear infinite;
+  right: 25%;
+  top: 15%;
+}
+
+@keyframes float1 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(50px, 30px) rotate(90deg); }
+  50% { transform: translate(20px, 60px) rotate(180deg); }
+  75% { transform: translate(-30px, 30px) rotate(270deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes float2 {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate(-40px, -20px) rotate(-90deg) scale(0.9); }
+  50% { transform: translate(-10px, -50px) rotate(-180deg) scale(1.1); }
+  75% { transform: translate(40px, -20px) rotate(-270deg) scale(0.9); }
+  100% { transform: translate(0, 0) rotate(-360deg) scale(1); }
+}
+
+@keyframes float3 {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33% { transform: translate(30px, -40px) rotate(120deg) scale(1.1); }
+  66% { transform: translate(-30px, -20px) rotate(240deg) scale(0.9); }
+  100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+}
+
+@keyframes float4 {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  20% { transform: translate(-20px, 40px) rotate(72deg) scale(0.95); }
+  40% { transform: translate(-40px, 0px) rotate(144deg) scale(1.05); }
+  60% { transform: translate(-20px, -40px) rotate(216deg) scale(0.95); }
+  80% { transform: translate(20px, -20px) rotate(288deg) scale(1.05); }
+  100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+}
+
+/* Additional animations */
+.particles-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: rgb(var(--color-primary-300) / 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  bottom: -10px;
+  opacity: 0;
+  z-index: 0;
+}
+
+.dark .particle {
+  background-color: rgb(var(--color-primary-500) / 0.3);
+}
+
+.particle-1 {
+  left: 15%;
+  animation: floatUp 15s ease-in infinite;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  left: 35%;
+  width: 8px;
+  height: 8px;
+  background-color: rgb(var(--color-secondary-300) / 0.4);
+  animation: floatUp 20s ease-in infinite;
+  animation-delay: 5s;
+}
+
+.particle-3 {
+  left: 55%;
+  width: 4px;
+  height: 4px;
+  animation: floatUp 18s ease-in infinite;
+  animation-delay: 2s;
+}
+
+.particle-4 {
+  left: 75%;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(var(--color-accent-300) / 0.4);
+  animation: floatUp 22s ease-in infinite;
+  animation-delay: 8s;
+}
+
+.particle-5 {
+  left: 85%;
+  animation: floatUp 16s ease-in infinite;
+  animation-delay: 4s;
+}
+
+.particle-6 {
+  left: 25%;
+  width: 5px;
+  height: 5px;
+  background-color: rgb(var(--color-banking-300) / 0.4);
+  animation: floatUp 19s ease-in infinite;
+  animation-delay: 10s;
+}
+
+.particle-7 {
+  left: 65%;
+  animation: floatUp 17s ease-in infinite;
+  animation-delay: 7s;
+}
+
+.particle-8 {
+  left: 45%;
+  width: 7px;
+  height: 7px;
+  background-color: rgb(var(--color-success-300) / 0.4);
+  animation: floatUp 21s ease-in infinite;
+  animation-delay: 3s;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Shimmer animation for cards */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(99, 102, 241, 0.1) 25%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(99, 102, 241, 0.1) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: shimmerEffect 4s infinite;
+}
+
+.dark .shimmer::after {
+  background: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 0.02) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.02) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+@keyframes shimmerEffect {
+  0% {
+    transform: translateX(-150%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(150%) rotate(30deg);
+  }
+}
+
+/* Pulsing highlight for important elements */
+.pulse-highlight {
+  animation: pulseHighlight 3s infinite;
+}
+
+@keyframes pulseHighlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-500), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--color-primary-500), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-500), 0);
+  }
+}
+
+/* Number counter animation */
+.animate-count {
+  animation: countUp 2s ease-out forwards;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover animations for cards */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.dark .hover-lift:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }

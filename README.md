@@ -1,46 +1,58 @@
-# Getting Started with Create React App
+# Sofinora India
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sofinora is a privacy-first collection of India-focused financial planning calculators. It helps people compare saving, investing, borrowing, tax and retirement scenarios with clear assumptions and year-by-year projections.
 
-## Available Scripts
+## Calculators
 
-In the project directory, you can run:
+- SIP, goal SIP and mutual-fund growth
+- CAGR and IRR
+- Fixed deposit, recurring deposit and NSC
+- PPF and Sukanya Samriddhi
+- NPS and retirement planning
+- EMI and amortization
+- HRA exemption
+- Inflation, emergency fund and net worth
+- Guided retirement-readiness assessment
 
-### `npm start`
+Calculator inputs are processed in the browser. The Net Worth tracker stores entries locally on the user's device.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Local development
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Requires Node.js 20.19 or newer.
 
-### `npm test`
+```bash
+npm install
+npm run dev
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Quality checks
 
-### `npm run build`
+```bash
+npm test
+npm run build
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The build command performs TypeScript validation before producing the optimized site in `dist/`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Phase 1 commerce setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Copy `.env.example` to `.env.local` and provide:
 
-### `npm run eject`
+- `VITE_STARTER_PACK_PAYMENT_URL`: hosted checkout/payment link that delivers `outputs/FinPlanner-Starter-Pack.zip`
+- `VITE_SUPPORT_EMAIL`: customer support email shown on the contact page
+- `VITE_PUBLIC_SITE_URL`: final public origin, used to generate `sitemap.xml` and the sitemap line in `robots.txt`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The website never exposes the paid ZIP from `public/`; upload it directly to the selected checkout or digital-delivery provider.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Technology
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- React and TypeScript
+- Vite and Vitest
+- Tailwind CSS
+- React Router
+- Recharts and Chart.js
+- Framer Motion and Lucide icons
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Important notice
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Sofinora provides educational estimates, not personalized financial, legal, accounting or tax advice. Rates, regulations and product terms can change; users should verify current official information before acting.

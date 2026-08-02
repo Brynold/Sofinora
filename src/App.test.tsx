@@ -1,9 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders the Sofinora calculator directory', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /make every money decision/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /explore calculators/i })).toBeInTheDocument();
 });
