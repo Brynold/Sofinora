@@ -103,7 +103,11 @@ const InvestmentVideo: React.FC = () => {
 
         </div>
 
-        <div className="relative aspect-video w-full self-center overflow-hidden bg-gradient-to-br from-slate-950 via-violet-950 to-cyan-950">
+        <div className={`relative w-full self-center overflow-hidden bg-gradient-to-br from-slate-950 via-violet-950 to-cyan-950 ${
+          loaded
+            ? 'aspect-video'
+            : 'min-h-[27rem] sm:min-h-[29rem] lg:aspect-video lg:min-h-0'
+        }`}>
           {loaded ? (
             <iframe
               className="absolute inset-0 h-full w-full"
@@ -117,23 +121,23 @@ const InvestmentVideo: React.FC = () => {
             <button
               type="button"
               onClick={() => setLoaded(true)}
-              className="group absolute inset-0 flex h-full w-full touch-manipulation flex-col items-center justify-center overflow-hidden p-6 text-center focus:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-cyan-300"
+              className="group absolute inset-0 flex h-full w-full touch-manipulation flex-col items-center justify-center overflow-hidden px-5 py-7 text-center focus:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-cyan-300 sm:p-6"
             >
               <span className="absolute inset-0 opacity-50 transition duration-700 group-hover:scale-110 [background-image:radial-gradient(circle_at_25%_25%,rgba(34,211,238,0.55),transparent_24%),radial-gradient(circle_at_75%_70%,rgba(167,139,250,0.55),transparent_26%)]" />
               <span className="absolute left-[12%] top-[16%] h-24 w-24 rounded-full border border-cyan-300/15 transition duration-700 group-hover:-translate-y-2 group-hover:scale-110" />
               <span className="absolute bottom-[12%] right-[10%] h-40 w-40 rounded-full border border-violet-300/15 transition duration-700 group-hover:translate-y-2 group-hover:scale-110" />
-              <span className="relative mb-6 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-cyan-200 backdrop-blur">
+              <span className="relative mb-4 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-cyan-200 backdrop-blur sm:mb-6 sm:text-xs sm:tracking-[0.14em]">
                 Free lesson · 8 minutes
               </span>
-              <span className="relative flex h-24 w-24 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white shadow-2xl backdrop-blur transition duration-300 group-hover:scale-110 group-hover:border-cyan-300/70 group-hover:bg-cyan-300/15">
+              <span className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white shadow-2xl backdrop-blur transition duration-300 group-hover:scale-110 group-hover:border-cyan-300/70 group-hover:bg-cyan-300/15 sm:h-24 sm:w-24">
                 <span className="absolute inset-[-10px] animate-pulse rounded-full border border-cyan-300/20" />
-                <Play size={38} className="ml-1" fill="currentColor" />
+                <Play size={32} className="ml-1 sm:h-[38px] sm:w-[38px]" fill="currentColor" />
               </span>
-              <span className="relative mt-6 text-2xl font-bold text-white sm:text-3xl">Investing 101</span>
+              <span className="relative mt-5 text-2xl font-bold text-white sm:mt-6 sm:text-3xl">Investing 101</span>
               <span className="relative mt-2 max-w-sm text-sm leading-6 text-slate-300">
                 Tap anywhere to start. The privacy-friendly player loads only when you choose to watch.
               </span>
-              <span className="relative mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-cyan-400 px-6 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-950/30 transition group-hover:bg-cyan-300 group-active:scale-[0.98]">
+              <span className="relative mt-5 inline-flex min-h-12 w-full max-w-[17rem] items-center justify-center gap-2 rounded-full bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-950/30 transition group-hover:bg-cyan-300 group-active:scale-[0.98] sm:mt-6 sm:w-auto sm:max-w-none sm:px-6">
                 <Play size={17} fill="currentColor" /> Play open video
               </span>
             </button>
