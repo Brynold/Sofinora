@@ -134,4 +134,22 @@ describe('calculator routes', () => {
     expect(screen.getByText('30%')).toBeInTheDocument();
     expect(screen.getByText('10%')).toBeInTheDocument();
   });
+
+  it('keeps the SIP page stable while the year slider is dragged', async () => {
+    window.history.pushState({}, '', '/calculators/sip');
+    render(<App />);
+
+    const wisdom = await screen.findByText(/financial wisdom:/i);
+    const initialWisdom = wisdom.textContent;
+    const slider = screen.getByRole('slider', { name: 'Investment period in years' });
+
+    fireEvent.change(slider, { target: { value: '8' } });
+    fireEvent.change(slider, { target: { value: '12' } });
+    fireEvent.change(slider, { target: { value: '22' } });
+
+    expect(wisdom).toHaveTextContent(initialWisdom || '');
+    expect(screen.queryByText(/in words: twenty two rupees/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('Long Term Investor')).not.toBeInTheDocument();
+    expect(slider).toHaveClass('touch-pan-y');
+  });
 });

@@ -34,7 +34,7 @@ const SIPCalculator: React.FC = () => {
     "The stock market is a device for transferring money from the impatient to the patient.",
     "Investing isn't about beating others at their game. It's about controlling yourself at your own game."
   ];
-  const randomQuote = financialQuotes[Math.floor(Math.random() * financialQuotes.length)];
+  const [randomQuote] = useState(() => financialQuotes[Math.floor(Math.random() * financialQuotes.length)]);
   const formatMoney = (value: number) => `₹${Math.round(value).toLocaleString('en-IN')}`;
   const maturityMultiple = investedAmount > 0 ? maturityValue / investedAmount : 0;
   const sipSummary = `A monthly SIP of ${formatMoney(monthlyInvestment)} for ${years} years at ${expectedReturnRate}% could grow ${formatMoney(investedAmount)} of invested capital into about ${formatMoney(maturityValue)}.`;
@@ -220,23 +220,11 @@ const SIPCalculator: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex justify-between items-center mb-4">
+            <div className="mb-4 flex min-h-8 items-center justify-between">
               <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400">
                 <Coins size={18} />
                 <h3 className="font-medium">Investment Period</h3>
               </div>
-              
-              {/* Achievement badges */}
-              {years >= 10 && (
-                <motion.span 
-                  className="achievement-badge"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 10 }}
-                >
-                  Long Term Investor
-                </motion.span>
-              )}
             </div>
 
             <FormField label="Investment Period">
@@ -248,7 +236,8 @@ const SIPCalculator: React.FC = () => {
                     onChange={(e) => setYears(Number(e.target.value))}
                     placeholder="Enter years"
                     min="1"
-                    max="50"
+                    max="30"
+                    amountInWords={false}
                   />
                   <span className={`ml-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Years</span>
                 </div>
@@ -261,7 +250,8 @@ const SIPCalculator: React.FC = () => {
                     max="30" 
                     value={years}
                     onChange={(e) => setYears(Number(e.target.value))}
-                    className="w-full h-2 accent-primary-500 bg-gray-200 dark:bg-dark-border rounded-lg appearance-none cursor-pointer"
+                    aria-label="Investment period in years"
+                    className="h-2 w-full cursor-pointer touch-pan-y select-none appearance-none rounded-lg bg-gray-200 accent-primary-500 dark:bg-dark-border"
                   />
                   <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
                     <span>1 yr</span>
