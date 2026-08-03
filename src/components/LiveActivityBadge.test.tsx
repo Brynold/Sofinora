@@ -1,38 +1,21 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import LiveActivityBadge from './LiveActivityBadge';
 
 describe('LiveActivityBadge', () => {
-  beforeEach(() => {
-    window.sessionStorage.clear();
-  });
-
-  afterEach(() => {
-    vi.unstubAllGlobals();
-    vi.restoreAllMocks();
-  });
-
-  it('shows the real active visitor count returned by the presence service', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({ activeSessions: 3 }),
-    }));
-
+  it('shows an illustrative activity preview within the 200–300 range', () => {
     render(<LiveActivityBadge />);
 
-    expect(screen.getByText('connecting')).toBeInTheDocument();
-    await waitFor(() => expect(screen.getByText('3')).toBeInTheDocument());
-    expect(screen.getByText('active now')).toBeInTheDocument();
-    expect(screen.getByText('Anonymous active sessions')).toBeInTheDocument();
+    expect(screen.getByText('247')).toBeInTheDocument();
+    expect(screen.getByText('activity preview')).toBeInTheDocument();
+    expect(screen.getByText('Illustrative visitor activity')).toBeInTheDocument();
   });
 
-  it('does not display a fabricated count when the service is unavailable', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
-
+  it('does not describe the preview as a live user count', () => {
     render(<LiveActivityBadge />);
 
-    await waitFor(() => expect(screen.getByText('live count unavailable')).toBeInTheDocument());
-    expect(screen.getByText('—')).toBeInTheDocument();
+    expect(screen.queryByText('active now')).not.toBeInTheDocument();
+    expect(screen.queryByText('Anonymous active sessions')).not.toBeInTheDocument();
   });
 });
